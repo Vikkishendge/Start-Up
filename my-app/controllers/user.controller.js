@@ -1,19 +1,18 @@
-const {User} = require('../models');
+const { User } = require('../models');
 
-exports.register = async(req,res)=>{
 
-    try{
+console.log('controller');
+exports.register = async (req, res) => {
+  try {
+    console.log('➡️ Register called with:', req.body);
 
-        console.log('controller')
-     const {name,email,password,role} = req.body;
+    const { user_id,name, email, password, role } = req.body;
+    const user = await User.create({ user_id,name, email, password, role });
 
-     const user=await User.create({name,email,password,role});
-
-     console.log(req.body);
-
-     res.status(201).json(user);
-    }catch(error)
-    {
-        res.status(401).json({error: error.message})
-    }
-}
+    console.log('✅ User created:', user);
+    res.status(201).json(user);
+  } catch (error) {
+    console.error('❌ Error in register:', error);
+    res.status(500).json({ error: error.message });
+  }
+};

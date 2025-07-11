@@ -1,19 +1,13 @@
 const express = require('express');
-const sequelize = require('./config/db');
-const UserRouter = require('./routes/user.routes');
+const cors = require('cors');
 require('dotenv').config();
-
+const userRoutes = require('./routes/user.route');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
-
+app.use(cors());
 app.use(express.json());
 
+app.use('/api/users', userRoutes);
 
-app.use('/api/users',UserRouter);
-
-console.log(app.req);
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

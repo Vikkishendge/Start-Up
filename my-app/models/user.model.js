@@ -1,10 +1,11 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/db');
 
-module.exports = (sequelize) =>sequelize.define('User', {
+console.log('model');
+module.exports = (sequelize) =>
+  sequelize.define('User', {
     user_id: {
       type: DataTypes.INTEGER,
-      autoIncrement: true,
+     // autoIncrement: true,
       primaryKey: true,
     },
     name: {
@@ -27,6 +28,6 @@ module.exports = (sequelize) =>sequelize.define('User', {
     },
   }, {
     tableName: 'user',
-    timestamps: true, 
-    underscored: true, 
+    timestamps: true,
+    underscored: true,
   });
