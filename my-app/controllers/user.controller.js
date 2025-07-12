@@ -1,18 +1,20 @@
 const { User } = require('../models');
 
-
-console.log('controller');
-exports.register = async (req, res) => {
+exports.createUser = async (req, res,next) => {
   try {
-    console.log('➡️ Register called with:', req.body);
+   
+    const{name,email,password,role}=req.body;
+   // const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const newUser = await User.create({
+      name,
+      email,
+      password,
+      role,
+    });
 
-    const { user_id,name, email, password, role } = req.body;
-    const user = await User.create({ user_id,name, email, password, role });
-
-    console.log('✅ User created:', user);
-    res.status(201).json(user);
-  } catch (error) {
-    console.error('❌ Error in register:', error);
-    res.status(500).json({ error: error.message });
+    res.status(201).json({ message: 'User registered successfully', user: newUser });
+  } catch (err) {
+    next(err);
   }
 };
+

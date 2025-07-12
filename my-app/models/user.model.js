@@ -1,11 +1,8 @@
-const { DataTypes } = require('sequelize');
-
-console.log('model');
-module.exports = (sequelize) =>
-  sequelize.define('User', {
-    user_id: {
-      type: DataTypes.INTEGER,
-     // autoIncrement: true,
+module.exports = (sequelize,DataTypes) => {
+  return sequelize.define('User', {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
     name: {
@@ -14,8 +11,11 @@ module.exports = (sequelize) =>
     },
     email: {
       type: DataTypes.STRING,
-      unique: true,
       allowNull: false,
+      unique: true,
+      validate: {
+        isEmail: true,
+      },
     },
     password: {
       type: DataTypes.STRING,
@@ -27,7 +27,8 @@ module.exports = (sequelize) =>
       allowNull: false,
     },
   }, {
-    tableName: 'user',
+    tableName: 'users',
     timestamps: true,
-    underscored: true,
   });
+};
+    
