@@ -14,14 +14,12 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: true,
       },
-    //   categoryId: {
-    //     type: DataTypes.UUID,
-    //     allowNull: false,
-    //     references: {
-    //       model: 'categories',
-    //       key: 'id',
-    //     },
-    //   },
+      categoryId: {
+        type: DataTypes.UUID,
+        allowNull: false,
+        references: { model: 'categories', key: 'id' },
+        onDelete: 'CASCADE'
+      },
     }, {
       tableName: 'subcategories',
       timestamps: true,

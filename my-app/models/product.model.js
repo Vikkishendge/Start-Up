@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
     },
     price: {
-      type: DataTypes.DECIMAL(10, 2), // more accurate than FLOAT for money
+      type: DataTypes.DECIMAL(10, 2), 
       allowNull: false,
     },
     margin: {
@@ -31,6 +31,17 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: 0,
       allowNull: false,
     },
+    categoryId: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      references: { model: 'categories', key: 'id' },
+      onDelete: 'CASCADE'
+    },
+    subcategoryId: {
+      type: DataTypes.UUID,
+      references: { model: 'subcategories', key: 'id' },
+      onDelete: 'SET NULL'
+    }
   }, {
     timestamps: true,
     tableName: 'products',
