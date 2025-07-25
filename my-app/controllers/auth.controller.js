@@ -1,10 +1,16 @@
 const { User } = require('../models');
 const bcrypt = require('bcrypt');
 const generateToken = require('../utils/generateToken');
+const validator = require('validator');
+
 
 exports.register = async (req, res, next) => {
   try {
     const { name, email, password, role } = req.body;
+
+    if (!validator.isEmail(email)) {
+      return res.status(400).json({ message: 'Invalid email format' });
+    }    
 
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser) return res.status(400).json({ message: 'Email already exists' });
@@ -23,6 +29,10 @@ exports.register = async (req, res, next) => {
 exports.login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
+
+    if (!validator.isEmail(email)) {
+      return res.status(400).json({ message: 'Invalid email format' });
+    }    
 
     const user = await User.findOne({ where: { email } });
     if (!user) return res.status(401).json({ message: 'Invalid credentials' });
